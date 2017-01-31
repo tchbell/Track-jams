@@ -20,9 +20,4 @@ var animatePoints = function () {
              animatePoints();
          }
      });
-});
-   
-    
-     
-    
-  
+}); 
