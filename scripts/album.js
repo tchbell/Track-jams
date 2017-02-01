@@ -1,12 +1,12 @@
 //Example Album
 
-var albumPicasso={
+var albumPicasso = {
     title: 'The Colors',
     artist: 'Pablo Picasso',
     label: 'Cubism',
     year: '1881',
     albumArtUrl: 'assets/images/album_covers/01.png',
-    songs:[
+    songs: [
         {title: 'Blue', duration: '4:26' },
         {title: 'Green', duration: '3:14'},
         {title: 'Red', duration: '5:01' },
@@ -18,7 +18,7 @@ var albumPicasso={
 
 //Another example Album
 
-var albumMarconi={
+var albumMarconi = {
     title: 'The Telepone',
     artist: 'Guglielmo Marconi',
     label: 'EM',
@@ -29,24 +29,23 @@ var albumMarconi={
         {title: 'Ring, ring, ring', duration: '5:01' },
         {title: 'Fits in your pocket', duration: '3:21' },
         {title: 'Can you hear me now?', duration: '3:14' },
-        {title: 'Wrong phone number', duration: '2:15' },
+        {title: 'Wrong phone number', duration: '2:15' }
     ]
     
 };
 
-var createSongRow = function(songNumber, songName, songLength){
+var createSongRow = function (songNumber, songName, songLength) {
     var template=
         '<tr class="album-view-song-item">'
-    +   '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
-    +   '   <td class="song-item-title">' + songName + '</td>'
-    +   '   <td class="song-item-duration">'  + songLength + '</td>'
-    +   '</tr>'
-    ;
+        +   '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
+        +   '   <td class="song-item-title">' + songName + '</td>'
+        +   '   <td class="song-item-duration">'  + songLength + '</td>'
+        +   '</tr>';
     
     return template;
 };
 
-var setCurrentAlbum = function(album){
+var setCurrentAlbum = function (album) {
     // #1
     var albumTitle = document.getElementsByClassName('album-view-title')[0];
     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
@@ -67,23 +66,22 @@ var setCurrentAlbum = function(album){
 };
 
 
-var findParentByClassName = function(element, targetClass) {
-    if (element) {
+var findParentByClassName = function(element, targetClass){
+    if(element){
         var currentParent = element.parentElement;
-        while (currentParent.className != targetClass && currentParent.className !== null) {
-            currentParent = currentParent.parentElement;
-            
         if(element.parentElement === null){
-        console.log("No parent found");
-    }
-        else if(currentParent.className !== targetClass){
-        console.log("No parent found with that class name");
-    }  
+            console.log("No parent found");
+        }else if(currentParent.className !== targetClass && currentParent.parentElement === null){
+            console.log("No parent found with that class name");
         }
-      
-        return currentParent;
+        while ( currentParent.className != targetClass && currentParent.className !== null){
+            currentParent = currentParent.parentElement;
+        }
+        
+        
     }
-};
+    return currentParent;
+}
 
 var getSongItem = function(element) {
     switch (element.className) {
