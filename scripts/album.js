@@ -42,22 +42,26 @@ var createSongRow = function(songNumber, songName, songLength){
     ;
     
    var $row = $(template);
-    var songNumber = $(this).attr('data-song-number');
-    var songItem = $(this).find('.song-item-number');
+   
 
     var clickHandler = function(){
-       if (currentlyPlayingSong === undefined) {
+         var songNumber = $(this).attr('data-song-number');
+        var songItem = $(this).find('.song-item-number');
+        
+       if (currentlyPlayingSong === null) {
 		songItem.html = pauseButtonTemplate;
            currentlyPlayingSong = songNumber;
 	   }else if(currentlyPlayingSong === songNumber){
             songItem.html=playButtonTemplate;
-            currentlyPlayingSong = undefined;
+            currentlyPlayingSong = null;
         }else if (currentlyPlayingSong !== songNumber){
             songItem.html=pauseButtonTemplate;
             currentlyPlayingSong = songNumber;
         }
         
-        
+        console.log($(this));
+        console.log(songNumber);
+        console.log(songItem.html);
     };
     
    
