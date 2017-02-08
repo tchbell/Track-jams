@@ -1,10 +1,10 @@
-var albumPicasso={
+var albumPicasso = {
     title: 'The Colors',
     artist: 'Pablo Picasso',
     label: 'Cubism',
     year: '1881',
     albumArtUrl: 'assets/images/album_covers/01.png',
-    songs:[
+    songs: [
         {title: 'Blue', duration: '4:26' },
         {title: 'Green', duration: '3:14'},
         {title: 'Red', duration: '5:01' },
@@ -16,7 +16,7 @@ var albumPicasso={
 
 //Another example Album
 
-var albumMarconi={
+var albumMarconi = {
     title: 'The Telepone',
     artist: 'Guglielmo Marconi',
     label: 'EM',
@@ -26,46 +26,41 @@ var albumMarconi={
         {title: 'Hello, Operator?', duration: '1:01' },
         {title: 'Ring, ring, ring', duration: '5:01' },
         {title: 'Fits in your pocket', duration: '3:21' },
-        {title: 'Can you hear me now?', duration: '3:14' },
-        {title: 'Wrong phone number', duration: '2:15' },
+        {title: 'Can you hear me now?', duration: '3:14'},
+        {title: 'Wrong phone number', duration: '2:15' }
     ]
     
 };
 
-var createSongRow = function(songNumber, songName, songLength){
+var createSongRow = function (songNumber, songName, songLength) {
     var template=
         '<tr class="album-view-song-item">'
-    +   '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
-    +   '   <td class="song-item-title">' + songName + '</td>'
-    +   '   <td class="song-item-duration">'  + songLength + '</td>'
-    +   '</tr>'
-    ;
+        +   '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
+        +   '   <td class="song-item-title">' + songName + '</td>'
+        +   '   <td class="song-item-duration">'  + songLength + '</td>'
+        +   '</tr>'
+        ;
     
-   var $row = $(template);
+    var $row = $(template);
    
 
-    var clickHandler = function(){
-         var songNumber = $(this).attr('data-song-number');
-        var songItem = $(this).find('.song-item-number');
+    var clickHandler = function () {
+        var songNumber = $(this).attr('data-song-number');
+        var songItem = $(this);
         
-       if (currentlyPlayingSong === null) {
-		songItem.html = pauseButtonTemplate;
-           currentlyPlayingSong = songNumber;
-	   }else if(currentlyPlayingSong === songNumber){
-            songItem.html=playButtonTemplate;
+        if (currentlyPlayingSong === null) {
+            songItem.html(pauseButtonTemplate);
+            currentlyPlayingSong = songNumber;
+        } else if (currentlyPlayingSong === songNumber) {
+            songItem.html(playButtonTemplate);
             currentlyPlayingSong = null;
-        }else if (currentlyPlayingSong !== songNumber){
-            songItem.html=pauseButtonTemplate;
+        } else if (currentlyPlayingSong !== songNumber) {
+            songItem.html(pauseButtonTemplate);
             currentlyPlayingSong = songNumber;
         }
-        
-        console.log($(this));
-        console.log(songNumber);
-        console.log(songItem.html);
     };
     
-   
-    var onHover = function(event) {
+    var onHover = function (event) {
         var songNumberCell = $(this).find('.song-item-number');
         var songNumber = songNumberCell.attr('data-song-number');
 
@@ -74,7 +69,7 @@ var createSongRow = function(songNumber, songName, songLength){
         }
     };
 
-    var offHover = function(event) {
+    var offHover = function (event) {
         var songNumberCell = $(this).find('.song-item-number');
         var songNumber = songNumberCell.attr('data-song-number');
 
@@ -88,7 +83,7 @@ var createSongRow = function(songNumber, songName, songLength){
     return $row;
 };
 
-var setCurrentAlbum = function(album){
+var setCurrentAlbum = function (album) {
     var $albumTitle = $('.album-view-title');
     var $albumArtist = $('.album-view-artist');
     var $albumReleaseInfo = $('.album-view-release-info');
@@ -102,7 +97,7 @@ var setCurrentAlbum = function(album){
     
     $albumSongList.empty();
     
-    for (var i=0; i < album.songs.length; i++){
+    for (var i=0; i < album.songs.length; i++) {
        var $newRow = createSongRow( i + 1, album.songs[i].title, album.songs[i].duration);
         $albumSongList.append($newRow);
     }
@@ -113,13 +108,12 @@ var setCurrentAlbum = function(album){
 
 //Album button templates
 
- var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 
 var currentlyPlayingSong = null;
 
- $(document).ready(function() {
-     setCurrentAlbum(albumPicasso);
-     
+$(document).ready(function() {
+    setCurrentAlbum(albumPicasso); 
 });
