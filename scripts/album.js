@@ -18,8 +18,10 @@ var createSongRow = function (songNumber, songName, songLength) {
             songItem.html(pauseButtonTemplate);
             currentlyPlayingSongNumber = songNumber;
             currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+            updatePlayerBarSong();
         } else if (currentlyPlayingSongNumber === songNumber) {
             songItem.html(playButtonTemplate);
+            $('.main-controls .play-pause').html(playerBarPlayButton);
             currentlyPlayingSongNumber = null;
             currentSongFromAlbum = null;
         } else if (currentlyPlayingSongNumber !== songNumber) {
@@ -72,23 +74,69 @@ var setCurrentAlbum = function (album) {
     }
 };
 
+var trackIndex = function(album, song){
+    return album.songs.indexOf(song);
+}
+
+var nextSong = function(){
+    //Know previous song
+    var trackBack = function(){
+        if(currentlyPlayingSongNumber === 0 ){
+            return currentAlbum.songs.length -1;
+        }else{
+            return currentlyPlayingSongNumber;
+        }
+    }
+    
+    trackBack();
+    console.log(trackBack());
+    //get index of song and increase by one
+   var currentTrackIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    currentTrackIndex ++;
+    if (currentTrackIndex >= currentAlbum.songs.length) {
+        currentTrackIndex = 0;
+    }
+    //set current song 
+    currentSongFromAlbum = currentAlbum.songs[currentTrackIndex];
+    currentlyPlayingSongNumber = currentTrackIndex + 1;
+
+    //update player bar;
+    updatePlayerBarSong();
+
+    
+    //update html of previous song
+    
+    //update html of current song to pause button
+    var $currentTrack;
+    
+    
+
+}
+
 var updatePlayerBarSong = function() {
     $('.song-name').text(currentSongFromAlbum.title);
     $('.artist-song-mobile').text(currentSongFromAlbum.title + " " + currentAlbum.artist);
     $('.artist-name').text(currentAlbum.artist);
+    
+     $('.main-controls .play-pause').html(playerBarPauseButton);
 }
+
+
 
 //Album button templates
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
-
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
+var playerBarPlayButton = '<span class="ion-play"></span>';
+var playerBarPauseButton = '<span class="ion-pause"></span>';
 
 
 var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
+var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso); 
+    $nextButton.click(nextSong);
 });
