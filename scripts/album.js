@@ -26,29 +26,30 @@ var createSongRow = function (songNumber, songName, songLength) {
         } else if (currentlyPlayingSongNumber !== songNumber) {
             songItem.html(pauseButtonTemplate);
             setSong(songNumber);
+        }
     };
     
-    var onHover = function (event) {
+        var onHover = function (event) {
         var songNumberCell = $(this).find('.song-item-number');
         var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
         if (songNumber !== currentlyPlayingSongNumber) {
             songNumberCell.html(playButtonTemplate);
         }
-    };
-
-    var offHover = function (event) {
+        };
+        
+        var offHover = function (event) {
         var songNumberCell = $(this).find('.song-item-number');
         var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
         if (songNumber !== currentlyPlayingSongNumber) {
             songNumberCell.html(songNumber);
         }
-    };
-    
-    $row.find('.song-item-number').click(clickHandler);
-    $row.hover(onHover, offHover);
-    return $row;
+        };
+        
+        $row.find('.song-item-number').click(clickHandler);
+        $row.hover(onHover, offHover);
+        return $row;
 };
 
 var setCurrentAlbum = function (album) {
@@ -88,7 +89,7 @@ var nextSong = function(){
    var songBefore = trackBack();
 
     //get index of song and increase by one
-   var currentTrackIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    var currentTrackIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentTrackIndex ++;
     if (currentTrackIndex >= currentAlbum.songs.length) {
         currentTrackIndex = 0;
@@ -104,7 +105,7 @@ var nextSong = function(){
     //update html of previous song
     
     //update html of current song to pause button
-    var $currentTrack =  getSongNumberCell(currentlyPlayingSongNumber);
+    var $currentTrack = getSongNumberCell(currentlyPlayingSongNumber);
     $currentTrack.html(pauseButtonTemplate);
     var $lastTrack = getSongNumberCell(songBefore);
     $lastTrack.html(playButtonTemplate);
