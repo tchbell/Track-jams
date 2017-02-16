@@ -36,6 +36,7 @@ var createSongRow = function (songNumber, songName, songLength) {
             songItem.html(pauseButtonTemplate);
             setSong(songNumber);
             currentSoundFile.play();
+            updatePlayerBarSong();
             
         }
     };
