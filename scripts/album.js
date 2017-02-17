@@ -16,14 +16,16 @@ var createSongRow = function (songNumber, songName, songLength) {
         var $volSeek = $('.volume .seek-bar');
         
         if (currentlyPlayingSongNumber !== null) {
-            var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');  currentlyPlayingCell.html(currentlyPlayingSongNumber);
+            var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');  currentlyPlayingCell.html(playButtonTemplate);
             
         }
         if (currentlyPlayingSongNumber === null) {
             songItem.html(pauseButtonTemplate);
             setSong(songNumber);
             updatePlayerBarSong();
+            updateSeekBarWhileSongPlays();
             updateSeekPercentage($volSeek, (currentVolume / 100));
+            currentSoundFile.play();
         } else if (currentlyPlayingSongNumber === songNumber) {
             if(currentSoundFile.isPaused()){
                 currentSoundFile.play();
@@ -94,8 +96,11 @@ var updateSeekBarWhileSongPlays = function() {
          currentSoundFile.bind('timeupdate', function(event) {
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
- 
+             
+             var currentTime = currentSoundFile.getTime();
+            
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             setCurrentTimeInPlayerBar(currentTime);
          });
  };
 }
@@ -224,6 +229,9 @@ var updatePlayerBarSong = function() {
     $('.artist-name').text(currentAlbum.artist);
     
      $('.main-controls .play-pause').html(playerBarPauseButton);
+    
+    var runTime = currentSoundFile.getDuration();
+    setTotalTimeInPlayerBar(runTime);
 }
 
 var setSong = function(songNumber){
@@ -254,6 +262,20 @@ var setVolume = function(volume){
 
 var getSongNumberCell = function(number){
     return $('.song-item-number[data-song-number="' + number + '"]');
+}
+
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    var $currentTime = $('.current-time');
+    $currentTime.text(currentTime);
+}
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    var $runTime = $('.total-time');
+    $runTime.text(totalTime);
+}
+
+var filterTimeCode = function(timeInSeconds) {
+   var newTime = parseFloat(timeInSeconds);
 }
 
 //Album button templates
