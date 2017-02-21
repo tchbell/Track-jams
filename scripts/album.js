@@ -266,7 +266,7 @@ var getSongNumberCell = function(number){
 
 var setCurrentTimeInPlayerBar = function(currentTime) {
     var $currentTime = $('.current-time');
-    $currentTime.text(currentTime);
+    $currentTime.text(filterTimeCode(currentTime));
 }
 
 var setTotalTimeInPlayerBar = function(totalTime) {
@@ -275,7 +275,12 @@ var setTotalTimeInPlayerBar = function(totalTime) {
 }
 
 var filterTimeCode = function(timeInSeconds) {
-   var newTime = parseFloat(timeInSeconds);
+    parseFloat(timeInSeconds);
+    var minutes = Math.floor(timeInSeconds/60);
+    var seconds = Math.floor(timeInSeconds%60);
+    return minutes + ":" + seconds;
+    
+    
 }
 
 //Album button templates
