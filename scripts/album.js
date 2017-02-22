@@ -3,7 +3,7 @@ var createSongRow = function (songNumber, songName, songLength) {
         '<tr class="album-view-song-item">'
         +   '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
         +   '   <td class="song-item-title">' + songName + '</td>'
-        +   '   <td class="song-item-duration">'  + songLength + '</td>'
+        +   '   <td class="song-item-duration">'  + filterTimeCode(songLength) + '</td>'
         +   '</tr>'
         ;
     
@@ -230,7 +230,9 @@ var updatePlayerBarSong = function() {
     
      $('.main-controls .play-pause').html(playerBarPauseButton);
     
-    var runTime = currentSoundFile.getDuration();
+    
+    
+    var runTime = getSongNumberCell(currentlyPlayingSongNumber).parent().find(".song-item-duration").text();
     setTotalTimeInPlayerBar(runTime);
 }
 
@@ -264,7 +266,7 @@ var getSongNumberCell = function(number){
     return $('.song-item-number[data-song-number="' + number + '"]');
 }
 
-var setCurrentTimeInPlayerBar = function(currentTime) {
+var setCurrentTimeInPlayerBar = function(currentTime){
     var $currentTime = $('.current-time');
     $currentTime.text(filterTimeCode(currentTime));
 }
@@ -274,14 +276,17 @@ var setTotalTimeInPlayerBar = function(totalTime) {
     $runTime.text(totalTime);
 }
 
-var filterTimeCode = function(timeInSeconds) {
+filterTimeCode = function(timeInSeconds) {
     parseFloat(timeInSeconds);
     var minutes = Math.floor(timeInSeconds/60);
     var seconds = Math.floor(timeInSeconds%60);
+    if(seconds<10){
+        return minutes + ":0" + seconds;
+    }
     return minutes + ":" + seconds;
     
     
-}
+};
 
 //Album button templates
 
